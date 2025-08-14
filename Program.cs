@@ -5,8 +5,6 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -14,18 +12,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 1) L� configura��es do appsettings.json
+// Lê as configurações de conexão do MongoDB do appsettings.json e as
+// disponibiliza via IOptions<ConfiguracaoMongoDB>
+// IOptions<ConfiguracaoMongoDB> é uma interface usada para acessar configurações fortemente tipadas
+// carregadas do appsettings.json, permitindo obter valores de configuração de forma segura e estruturada.
 builder.Services.Configure<ConfiguracaoMongoDB>(
     builder.Configuration.GetSection("ConfiguracaoMongoDb"));
 
-// 2) Registra o cliente MongoDB
+
+// Registra o cliente MongoDB como singleton, permitindo o acesso ao banco durante toda a vida da aplicação
+// Singleton é um padrão de projeto onde uma única instância de um serviço é criada e
+// compartilhada durante toda a vida da aplicação.
 builder.Services.AddSingleton<IMongoClient>(sp =>
 {
     var config = sp.GetRequiredService<IOptions<ConfiguracaoMongoDB>>().Value;
     return new MongoClient(config.StringConexao);
 });
 
-// 3) Registra a cole��o de alunos
+// Registra a coleção de alunos como singleton, facilitando operações CRUD na coleção "Alunos"
 builder.Services.AddSingleton(sp =>
 {
     var config = sp.GetRequiredService<IOptions<ConfiguracaoMongoDB>>().Value;
@@ -34,13 +38,12 @@ builder.Services.AddSingleton(sp =>
     return banco.GetCollection<Aluno>(config.NomeColecaoAlunos);
 });
 
-// 4) Registra o servi�o de alunos
+// Registra o serviço de alunos, responsável pela lógica de negócio relacionada à entidade Aluno
 builder.Services.AddSingleton<ServicoAlunos>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 
@@ -52,9 +55,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
