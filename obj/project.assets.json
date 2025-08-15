@@ -1041,11 +1041,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\APIMongoDB\\APIMongoDB\\APIMongoDB.csproj",
+      "projectUniqueName": "C:\\Users\\labsfiap\\Documents\\GitHub\\APIMongoDB\\APIMongoDB.csproj",
       "projectName": "APIMongoDB",
-      "projectPath": "D:\\APIMongoDB\\APIMongoDB\\APIMongoDB.csproj",
+      "projectPath": "C:\\Users\\labsfiap\\Documents\\GitHub\\APIMongoDB\\APIMongoDB.csproj",
       "packagesPath": "C:\\Users\\labsfiap\\.nuget\\packages\\",
-      "outputPath": "D:\\APIMongoDB\\APIMongoDB\\obj\\",
+      "outputPath": "C:\\Users\\labsfiap\\Documents\\GitHub\\APIMongoDB\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
